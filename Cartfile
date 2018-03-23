@@ -1,1 +1,3 @@
-github "kishikawakatsumi/KeychainAccess"
+github "kishikawakatsumi/KeychainAccess" 
+github "yuchan/IG" "master"
+github "SwiftyJSON/SwiftyJSON"

@@ -9,6 +9,7 @@
 import UIKit
 import WebKit
 import KeychainAccess
+import IG
 
 class AuthenticationWebViewController: UIViewController {
 
@@ -17,7 +18,7 @@ class AuthenticationWebViewController: UIViewController {
         super.viewDidLoad()
         webView.navigationDelegate = self
         // Do any additional setup after loading the view.
-        if let url = URL(string: "https://api.instagram.com/oauth/authorize/?client_id=\(Configuration.IG_CLIENT_ID)&redirect_uri=\(Configuration.IG_REDIRECT_URI)&response_type=code") {
+        if let url = IG.authenticationUrl() {
             let request = URLRequest(url: url)
             webView.load(request)
         }
@@ -47,7 +48,7 @@ extension AuthenticationWebViewController: WKNavigationDelegate {
             decisionHandler(.allow)
             return
         }
-        
+
         if let params = url.query?.split(separator: "&").filter({ (substring) -> Bool in
             if String(substring).contains("code=") {
                 return true
@@ -58,28 +59,27 @@ extension AuthenticationWebViewController: WKNavigationDelegate {
                 decisionHandler(.cancel)
                 return
             }
-            
+
             let code: String = String(params[0].split(separator: "=")[1])
-            
+
             IG.getAccessToken(code: code, completion: { (data, response, error) in
                 if error != nil, data == nil {
-                    
+
                 } else {
                     do {
                         let response = try IGAuthResponse(data: data!)
                         try Keychain(service: "Instagram").set(response.accessToken, key: "access_token")
-                        
                     } catch {
-                        
+
                     }
-                    
+
                     DispatchQueue.main.async {
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
             })
         }
-        
+
         decisionHandler(.cancel)
     }
 }

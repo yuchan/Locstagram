@@ -1,0 +1,25 @@
+PODS:
+  - ECKit-Utils (0.1.1):
+    - SwiftyJSON (~> 3.1.4)
+  - Nimble (7.0.3)
+  - Quick (1.2.0)
+  - SwiftyJSON (3.1.4)
+
+DEPENDENCIES:
+  - ECKit-Utils (from `../`)
+  - Nimble (~> 7.0.2)
+  - Quick (~> 1.2.0)
+
+EXTERNAL SOURCES:
+  ECKit-Utils:
+    :path: ../
+
+SPEC CHECKSUMS:
+  ECKit-Utils: cd581061e8bd3c697436c22fcf49e1a590e5b109
+  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+
+PODFILE CHECKSUM: 69173724d441ab75a72de5098481e1d6499b5741
+
+COCOAPODS: 1.4.0

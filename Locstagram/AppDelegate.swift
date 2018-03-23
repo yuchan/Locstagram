@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IG
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         IG.configure(clientID: Configuration.IG_CLIENT_ID, clientSecret: Configuration.IG_CLIENT_SECRET, redirectURI: Configuration.IG_REDIRECT_URI)
+        HKWrapper().request()
         return true
     }
 

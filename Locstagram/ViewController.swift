@@ -8,24 +8,27 @@
 
 import UIKit
 import KeychainAccess
+import IG
 
 class ViewController: UIViewController {
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var authorizationLabel: UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         refreshUIComponents()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshUIComponents), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
-    
-    fileprivate func refreshUIComponents() {
+
+    @objc fileprivate func refreshUIComponents() {
         do {
             if let accessToken = try Keychain(service: "Instagram").get("access_token") {
                 signInButton.isHidden = true
                 IG.biography(accessToken: accessToken, completion: {(user, error) in
                     DispatchQueue.main.async {
                         self.authorizationLabel.text = user?.data.username
+                        HKWrapper().getStepCount()
                     }
                 })
             }
@@ -33,7 +36,7 @@ class ViewController: UIViewController {
             signInButton.isHidden = false
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         refreshUIComponents()
